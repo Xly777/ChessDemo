@@ -3,8 +3,10 @@ package view;
 import controller.GameController;
 import model.ChessColor;
 
+import javax.imageio.IIOException;
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -34,6 +36,7 @@ public class ChessGameFrame extends JFrame {
         addHelloButton();
         addLoadButton();
         addInitButton();
+        addSaveButton();
     }
 
 
@@ -106,4 +109,29 @@ public class ChessGameFrame extends JFrame {
         });
     }
 
+    private void addSaveButton() {
+        JButton button = new JButton("Save");
+        button.setLocation(HEIGTH, HEIGTH / 10 + 400);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+
+        button.addActionListener(e -> {
+            String name = JOptionPane.showInputDialog(this, "Input file name here");
+            File save = new File("C:\\Users\\Xly\\IdeaProjects\\ChessDemo\\loadData\\",name);
+            if (!save.getParentFile().exists()) {
+                save.getParentFile().mkdirs();
+            }
+            try {
+                Writer out = new FileWriter(save);
+                for (int i = 0; i < 9; i++) {
+                    out.write(gameController.getChessboard().saveGame().get(i));
+                    out.write("\n");
+                }
+                out.close();
+            } catch (IOException a) {
+                a.printStackTrace();
+            }
+        });
+    }
 }

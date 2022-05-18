@@ -6,6 +6,7 @@ import controller.ClickController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -167,7 +168,7 @@ public class Chessboard extends JComponent {
     }
 
     public void loadGame(List<String> chessData) {
-      for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 switch (chessData.get(i).charAt(j)) {
                     case 'R':
@@ -231,7 +232,99 @@ public class Chessboard extends JComponent {
         }
         chessData.forEach(System.out::println);
     }
-    public void saveGame(){
 
+    public List<String> saveGame() {
+        List<String> chessData = new ArrayList<>();
+        char[][] chessBoard = new char[9][9];
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (chessComponents[i][j] instanceof BishopChessComponent) {
+                    if (chessComponents[i][j].getChessColor() == ChessColor.WHITE) {
+                        chessBoard[i][j] = 'b';
+                    } else {
+                        chessBoard[i][j] = 'B';
+                    }
+                } else if (chessComponents[i][j] instanceof EmptySlotComponent) {
+                    chessBoard[i][j] = '_';
+                } else if (chessComponents[i][j] instanceof KingChessComponent) {
+                    if (chessComponents[i][j].getChessColor() == ChessColor.WHITE) {
+                        chessBoard[i][j] = 'k';
+                    } else {
+                        chessBoard[i][j] = 'K';
+                    }
+                } else if (chessComponents[i][j] instanceof KnightChessComponent) {
+                    if (chessComponents[i][j].getChessColor() == ChessColor.WHITE) {
+                        chessBoard[i][j] = 'n';
+                    } else {
+                        chessBoard[i][j] = 'N';
+                    }
+                } else if (chessComponents[i][j] instanceof PawnChessComponent) {
+                    if (chessComponents[i][j].getChessColor() == ChessColor.WHITE) {
+                        chessBoard[i][j] = 'p';
+                    } else {
+                        chessBoard[i][j] = 'P';
+                    }
+                } else if (chessComponents[i][j] instanceof QueenChessComponent) {
+                    if (chessComponents[i][j].getChessColor() == ChessColor.WHITE) {
+                        chessBoard[i][j] = 'q';
+                    } else {
+                        chessBoard[i][j] = 'Q';
+                    }
+                } else if (chessComponents[i][j] instanceof RookChessComponent) {
+                    if (chessComponents[i][j].getChessColor() == ChessColor.WHITE) {
+                        chessBoard[i][j] = 'r';
+                    } else {
+                        chessBoard[i][j] = 'R';
+                    }
+                }
+            }
+        }
+        if (getCurrentColor() == ChessColor.WHITE) {
+            chessBoard[8][0] = 'w';
+        } else {
+            chessBoard[8][0] = 'b';
+        }
+        StringBuilder l1 = new StringBuilder();
+        StringBuilder l2 = new StringBuilder();
+        StringBuilder l3 = new StringBuilder();
+        StringBuilder l4 = new StringBuilder();
+        StringBuilder l5 = new StringBuilder();
+        StringBuilder l6 = new StringBuilder();
+        StringBuilder l7 = new StringBuilder();
+        StringBuilder l8 = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            l1.append(chessBoard[0][i]);
+        }
+        for (int i = 0; i < 8; i++) {
+            l2.append(chessBoard[1][i]);
+        }
+        for (int i = 0; i < 8; i++) {
+            l3.append(chessBoard[2][i]);
+        }
+        for (int i = 0; i < 8; i++) {
+            l4.append(chessBoard[3][i]);
+        }
+        for (int i = 0; i < 8; i++) {
+            l5.append(chessBoard[4][i]);
+        }
+        for (int i = 0; i < 8; i++) {
+            l6.append(chessBoard[5][i]);
+        }
+        for (int i = 0; i < 8; i++) {
+            l7.append(chessBoard[6][i]);
+        }
+        for (int i = 0; i < 8; i++) {
+            l8.append(chessBoard[7][i]);
+        }
+        chessData.add(l1.toString());
+        chessData.add(l2.toString());
+        chessData.add(l3.toString());
+        chessData.add(l4.toString());
+        chessData.add(l5.toString());
+        chessData.add(l6.toString());
+        chessData.add(l7.toString());
+        chessData.add(l8.toString());
+        chessData.add(String.valueOf(chessBoard[8][0]));
+        return chessData;
     }
 }
