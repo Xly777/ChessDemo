@@ -227,8 +227,10 @@ public class Chessboard extends JComponent {
         }
         if (chessData.get(8).charAt(0) == 'w') {
             currentColor = ChessColor.WHITE;
+            ChessGameFrame.changeLabel(ChessColor.WHITE);
         } else {
             currentColor = ChessColor.BLACK;
+            ChessGameFrame.changeLabel(ChessColor.BLACK);
         }
         chessData.forEach(System.out::println);
     }

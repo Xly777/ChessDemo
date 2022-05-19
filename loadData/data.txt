@@ -3,7 +3,7 @@ PPPPPPPP
 ________ 
 ________ 
 ________ 
-p_______    
-_ppppppp
+p______p    
+_pppppp_
 rnbqkbnr
-w
+b

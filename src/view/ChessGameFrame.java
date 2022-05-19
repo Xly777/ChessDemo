@@ -3,7 +3,6 @@ package view;
 import controller.GameController;
 import model.ChessColor;
 
-import javax.imageio.IIOException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -37,6 +36,7 @@ public class ChessGameFrame extends JFrame {
         addLoadButton();
         addInitButton();
         addSaveButton();
+        addLabel2();
     }
 
 
@@ -53,6 +53,15 @@ public class ChessGameFrame extends JFrame {
     /**
      * 在游戏面板中添加标签
      */
+    private void addLabel2() {
+        JLabel current = new JLabel("Current Player:");
+        current.setLocation(HEIGTH, HEIGTH / 10 - 40);
+        current.setSize(200, 60);
+        current.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(current);
+
+    }
+
     private void addLabel() {
         statusLabel.setLocation(HEIGTH, HEIGTH / 10);
         statusLabel.setSize(200, 60);
@@ -90,7 +99,12 @@ public class ChessGameFrame extends JFrame {
 
         button.addActionListener(e -> {
             System.out.println("Click load");
-            String path = JOptionPane.showInputDialog(this, "Input Path here");
+            JFileChooser jfchooser = new JFileChooser("C:\\Users\\Xly\\IdeaProjects\\ChessDemo\\loadData");
+            int option = jfchooser.showOpenDialog(null);
+            String path = "";
+            if (option == JFileChooser.APPROVE_OPTION) {
+                path = jfchooser.getSelectedFile().getPath();
+            }
             gameController.loadGameFromFile(path);
         });
     }
@@ -118,7 +132,7 @@ public class ChessGameFrame extends JFrame {
 
         button.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(this, "Input file name here");
-            File save = new File("C:\\Users\\Xly\\IdeaProjects\\ChessDemo\\loadData\\",name);
+            File save = new File("C:\\Users\\Xly\\IdeaProjects\\ChessDemo\\loadData\\", name);
             if (!save.getParentFile().exists()) {
                 save.getParentFile().mkdirs();
             }
