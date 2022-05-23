@@ -110,7 +110,7 @@ public abstract class ChessComponent extends JComponent {
     /**
      * 这个方法主要用于加载一些特定资源，如棋子图片等等。
      *
-     * @throws IOException 如果一些资源找不到(如棋子图片路径错误)，就会抛出异常
+     * @throws IOException 如果一些资源找不到(如棋子图片路径错误)，就会出异常
      */
     public abstract void loadResource() throws IOException;
 

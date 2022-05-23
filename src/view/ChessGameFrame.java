@@ -32,7 +32,6 @@ public class ChessGameFrame extends JFrame {
 
         addChessboard();
         addLabel();
-        addHelloButton();
         addLoadButton();
         addInitButton();
         addSaveButton();
@@ -77,22 +76,9 @@ public class ChessGameFrame extends JFrame {
         }
     }
 
-    /**
-     * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
-     */
-
-    private void addHelloButton() {
-        JButton button = new JButton("Show Hello Here");
-        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "Hello, world!"));
-        button.setLocation(HEIGTH, HEIGTH / 10 + 120);
-        button.setSize(200, 60);
-        button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        add(button);
-    }
-
     private void addLoadButton() {
         JButton button = new JButton("Load");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 240);
+        button.setLocation(HEIGTH, HEIGTH / 10 + 170);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
@@ -102,16 +88,22 @@ public class ChessGameFrame extends JFrame {
             JFileChooser jfchooser = new JFileChooser("C:\\Users\\Xly\\IdeaProjects\\ChessDemo\\loadData");
             int option = jfchooser.showOpenDialog(null);
             String path = "";
+            FileFilterTest fileFilter = new FileFilterTest();
+            jfchooser.setFileFilter(fileFilter);
             if (option == JFileChooser.APPROVE_OPTION) {
-                path = jfchooser.getSelectedFile().getPath();
+                if (jfchooser.getSelectedFile() == null) {
+                    JOptionPane.showMessageDialog(null, "need txt file", "wrong", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    path = jfchooser.getSelectedFile().getPath();
+                }
             }
             gameController.loadGameFromFile(path);
         });
     }
 
     private void addInitButton() {
-        JButton button = new JButton("initiate");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 320);
+        JButton button = new JButton("Initiate");
+        button.setLocation(HEIGTH, HEIGTH / 10 + 250);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
@@ -125,7 +117,7 @@ public class ChessGameFrame extends JFrame {
 
     private void addSaveButton() {
         JButton button = new JButton("Save");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 400);
+        button.setLocation(HEIGTH, HEIGTH / 10 + 330);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
@@ -147,5 +139,18 @@ public class ChessGameFrame extends JFrame {
                 a.printStackTrace();
             }
         });
+    }
+
+    class FileFilterTest extends javax.swing.filechooser.FileFilter {
+        public boolean accept(java.io.File f) {
+            if (f.isDirectory()) return true;
+            return f.getName().endsWith(".txt");
+        }
+
+        @Override
+        public String getDescription() {
+            return "need txt file";
+        }
+
     }
 }
