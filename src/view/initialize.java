@@ -44,12 +44,13 @@ public class initialize extends JFrame {
                     JOptionPane.showMessageDialog(null, "need txt file", "wrong", JOptionPane.ERROR_MESSAGE);
                 } else {
                     path = jfchooser.getSelectedFile().getPath();
+                    ChessGameFrame mainFrame = new ChessGameFrame(1000, 640);
+                    mainFrame.setVisible(true);
+                    setVisible(false);
+                    mainFrame.gameController.loadGameFromFile(path);
                 }
             }
-            ChessGameFrame mainFrame = new ChessGameFrame(1000, 640);
-            mainFrame.setVisible(true);
-            setVisible(false);
-            gameController.loadGameFromFile(path);
+
         });
         button.setBounds(700, 100, 150, 65);
         button1.setBounds(700, 250, 150, 65);

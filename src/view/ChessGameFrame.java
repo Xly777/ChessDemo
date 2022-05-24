@@ -15,7 +15,7 @@ public class ChessGameFrame extends JFrame {
     private final int WIDTH;
     private final int HEIGTH;
     public final int CHESSBOARD_SIZE;
-    private GameController gameController;
+    public GameController gameController;
     public static JLabel statusLabel = new JLabel("White");
 
     public ChessGameFrame(int width, int height) {
