@@ -85,7 +85,7 @@ public class ChessGameFrame extends JFrame {
 
         button.addActionListener(e -> {
             System.out.println("Click load");
-            JFileChooser jfchooser = new JFileChooser("C:\\Users\\Xly\\IdeaProjects\\ChessDemo\\loadData");
+            JFileChooser jfchooser = new JFileChooser(".\\loadData");
             int option = jfchooser.showOpenDialog(null);
             String path = "";
             FileFilterTest fileFilter = new FileFilterTest();
@@ -110,7 +110,7 @@ public class ChessGameFrame extends JFrame {
 
         button.addActionListener(e -> {
             this.gameController.getChessboard().initiateEmptyChessboard();
-            gameController.loadGameFromFile("C:\\Users\\Xly\\IdeaProjects\\ChessDemo\\loadData\\initiate.txt");
+            gameController.loadGameFromFile(".\\loadData\\initiate.txt");
             this.gameController.getChessboard().repaint();
         });
     }
@@ -124,7 +124,7 @@ public class ChessGameFrame extends JFrame {
 
         button.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(this, "Input file name here");
-            File save = new File("C:\\Users\\Xly\\IdeaProjects\\ChessDemo\\loadData\\", name);
+            File save = new File(".\\loadData\\", name+".txt");
             if (!save.getParentFile().exists()) {
                 save.getParentFile().mkdirs();
             }
