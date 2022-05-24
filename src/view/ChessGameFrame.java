@@ -27,7 +27,9 @@ public class ChessGameFrame extends JFrame {
         setSize(WIDTH, HEIGTH);
         setLocationRelativeTo(null); // Center the window.
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
-        setLayout(null);
+//        setLayout(null);
+        ImageIcon imageIcon = new ImageIcon(".\\images\\41bf1dd81ebacbb3b69a73042e988740.jpeg");//插入图片
+        JLabel labelImage = new JLabel(imageIcon);
 
 
         addChessboard();
@@ -36,6 +38,7 @@ public class ChessGameFrame extends JFrame {
         addInitButton();
         addSaveButton();
         addLabel2();
+        add(labelImage);
     }
 
 
@@ -141,7 +144,7 @@ public class ChessGameFrame extends JFrame {
         });
     }
 
-    class FileFilterTest extends javax.swing.filechooser.FileFilter {
+    static class FileFilterTest extends javax.swing.filechooser.FileFilter {
         public boolean accept(java.io.File f) {
             if (f.isDirectory()) return true;
             return f.getName().endsWith(".txt");
