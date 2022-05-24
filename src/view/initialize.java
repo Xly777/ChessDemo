@@ -16,7 +16,7 @@ public class initialize extends JFrame {
 //        label=new JLabel("国际象棋",new ImageIcon("C:\\Users\\lenovo\\IdeaProjects\\ChessDemo\\images\\aa567cad7820bd6fa4f0ce4cf0ea8f0f.jpeg"), SwingConstants.CENTER);
         label = new JLabel("国际象棋");
 
-        label.setIcon(new ImageIcon("C:\\Users\\lenovo\\IdeaProjects\\Chess1\\images\\27f361a55b83b6c66403aa7788914cfa.jpeg"));
+        label.setIcon(new ImageIcon(".\\images\\27f361a55b83b6c66403aa7788914cfa.jpeg"));
         label.setIconTextGap(-1000);
         label.setLayout(null);
         label.setLocation(40, 40);
@@ -44,12 +44,12 @@ public class initialize extends JFrame {
                     JOptionPane.showMessageDialog(null, "need txt file", "wrong", JOptionPane.ERROR_MESSAGE);
                 } else {
                     path = jfchooser.getSelectedFile().getPath();
+                    ChessGameFrame mainFrame = new ChessGameFrame(1000, 640);
+                    mainFrame.setVisible(true);
+                    setVisible(false);
+                    mainFrame.gameController.loadGameFromFile(path);
                 }
             }
-            ChessGameFrame mainFrame = new ChessGameFrame(1000, 640);
-            mainFrame.setVisible(true);
-            setVisible(false);
-            gameController.loadGameFromFile(path);
         });
         button.setBounds(700, 100, 150, 65);
         button1.setBounds(700, 250, 150, 65);
