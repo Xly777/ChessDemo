@@ -1,11 +1,13 @@
 package view;
 
+import controller.ClickController;
 import controller.GameController;
 import model.ChessColor;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -19,6 +21,7 @@ public class ChessGameFrame extends JFrame {
     public static JLabel statusLabel = new JLabel("White");
 
     public ChessGameFrame(int width, int height) {
+        this.setLayout(null);
         setTitle("2022 CS102A Project "); //设置标题
         this.WIDTH = width;
         this.HEIGTH = height;
@@ -127,7 +130,7 @@ public class ChessGameFrame extends JFrame {
 
         button.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(this, "Input file name here");
-            File save = new File(".\\loadData\\", name+".txt");
+            File save = new File(".\\loadData\\", name + ".txt");
             if (!save.getParentFile().exists()) {
                 save.getParentFile().mkdirs();
             }
