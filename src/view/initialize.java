@@ -1,6 +1,8 @@
 package view;
 
 import controller.GameController;
+import model.ChessColor;
+import model.KingChessComponent;
 
 import javax.swing.*;
 import java.awt.*;
