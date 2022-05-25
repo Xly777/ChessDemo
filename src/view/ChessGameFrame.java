@@ -21,7 +21,6 @@ public class ChessGameFrame extends JFrame {
     public static JLabel statusLabel = new JLabel("White");
 
     public ChessGameFrame(int width, int height) {
-        this.setLayout(null);
         setTitle("2022 CS102A Project "); //设置标题
         this.WIDTH = width;
         this.HEIGTH = height;
