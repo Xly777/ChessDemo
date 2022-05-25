@@ -81,7 +81,7 @@ public class ChessGameFrame extends JFrame {
 
     private void addLoadButton() {
         JButton button = new JButton("Load");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 170);
+        button.setLocation(HEIGTH, HEIGTH / 10 + 250);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
@@ -106,7 +106,7 @@ public class ChessGameFrame extends JFrame {
 
     private void addInitButton() {
         JButton button = new JButton("Initiate");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 250);
+        button.setLocation(HEIGTH, HEIGTH / 10 + 170);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
