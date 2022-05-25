@@ -50,6 +50,7 @@ public class initialize extends JFrame {
                     mainFrame.gameController.loadGameFromFile(path);
                 }
             }
+
         });
         button.setBounds(700, 100, 150, 65);
         button1.setBounds(700, 250, 150, 65);
