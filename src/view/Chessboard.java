@@ -99,6 +99,8 @@ public class Chessboard extends JComponent {
 
         chess1.repaint();
         chess2.repaint();
+
+
     }
 
     public void initiateEmptyChessboard() {
@@ -118,6 +120,8 @@ public class Chessboard extends JComponent {
     public void swapColor() {
         currentColor = currentColor == ChessColor.BLACK ? ChessColor.WHITE : ChessColor.BLACK;
         ChessGameFrame.changeLabel(currentColor);
+        ChessGameFrame.addRound();
+        ChessGameFrame.time=30;
     }
 
     public void initRookOnBoard(int row, int col, ChessColor color) {

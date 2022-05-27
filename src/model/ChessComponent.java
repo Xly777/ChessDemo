@@ -22,7 +22,7 @@ public abstract class ChessComponent extends JComponent {
      */
 
 //  private static final Dimension CHESSGRID_SIZE = new Dimension(1080 / 4 * 3 / 8, 1080 / 4 * 3 / 8);
-    private static final Color[] BACKGROUND_COLORS = {Color.WHITE, Color.BLACK};
+    private static final Color[] BACKGROUND_COLORS = {Color.WHITE, Color.pink};
     /**
      * handle click event
      */
@@ -91,10 +91,21 @@ public abstract class ChessComponent extends JComponent {
     @Override
     protected void processMouseEvent(MouseEvent e) {
         super.processMouseEvent(e);
+        if (e.getID()==MouseEvent.MOUSE_EXITED){
+            paintComponent(getGraphics());
+        }
 
         if (e.getID() == MouseEvent.MOUSE_PRESSED) {
             System.out.printf("Click [%d,%d]\n", chessboardPoint.getX(), chessboardPoint.getY());
             clickController.onClick(this);
+
+        }
+
+        if (e.getID()==MouseEvent.MOUSE_ENTERED){
+            Graphics g=getGraphics();
+            ((Graphics2D)g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,0.3f));
+            g.setColor(Color.BLACK);
+            g.fillRect(0,0,this.getWidth(),this.getHeight());
         }
     }
 

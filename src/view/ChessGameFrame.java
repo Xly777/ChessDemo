@@ -5,9 +5,18 @@ import controller.GameController;
 import model.ChessColor;
 
 import javax.swing.*;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.awt.*;
 import java.io.*;
+import java.lang.reflect.MalformedParameterizedTypeException;
+import java.net.MalformedURLException;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static view.ChessGameFrame.time;
+import static view.ChessGameFrame.timeLabel;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -17,8 +26,18 @@ public class ChessGameFrame extends JFrame {
     private final int WIDTH;
     private final int HEIGTH;
     public final int CHESSBOARD_SIZE;
+    public int a=1;
+    public Chessboard chessboard=null;
     public GameController gameController;
     public static JLabel statusLabel = new JLabel("White");
+    ImageIcon imageIcon = new ImageIcon(".\\images\\41bf1dd81ebacbb3b69a73042e988740.jpeg");//插入图片
+    JLabel labelImage = new JLabel(imageIcon);
+    static JLabel roundLabel=new JLabel();
+    public static int round;
+    public static int time=30;
+    static JLabel timeLabel=new JLabel();
+
+
 
     public ChessGameFrame(int width, int height) {
         setTitle("2022 CS102A Project "); //设置标题
@@ -30,9 +49,8 @@ public class ChessGameFrame extends JFrame {
         setLocationRelativeTo(null); // Center the window.
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
 //        setLayout(null);
-        ImageIcon imageIcon = new ImageIcon(".\\images\\41bf1dd81ebacbb3b69a73042e988740.jpeg");//插入图片
-        JLabel labelImage = new JLabel(imageIcon);
-
+//        ImageIcon imageIcon = new ImageIcon(".\\images\\41bf1dd81ebacbb3b69a73042e988740.jpeg");//插入图片
+//        JLabel labelImage = new JLabel(imageIcon);
 
         addChessboard();
         addLabel();
@@ -40,7 +58,10 @@ public class ChessGameFrame extends JFrame {
         addInitButton();
         addSaveButton();
         addLabel2();
+        addNewButton();
         add(labelImage);
+
+        new Thread((new MyThread(chessboard))).start();
     }
 
 
@@ -49,6 +70,7 @@ public class ChessGameFrame extends JFrame {
      */
     private void addChessboard() {
         Chessboard chessboard = new Chessboard(CHESSBOARD_SIZE, CHESSBOARD_SIZE);
+        this.chessboard=chessboard;
         gameController = new GameController(chessboard);
         chessboard.setLocation(HEIGTH / 10, HEIGTH / 10);
         add(chessboard);
@@ -64,6 +86,23 @@ public class ChessGameFrame extends JFrame {
         current.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(current);
 
+        roundLabel.setText("Round: "+round/2);
+        roundLabel.setLocation(HEIGTH, HEIGTH / 10 +40);
+        roundLabel.setSize(200, 60);
+        roundLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(roundLabel);
+
+        timeLabel.setText("Remaining Time: "+time);
+        timeLabel.setLocation(HEIGTH, HEIGTH / 10 +80);
+        timeLabel.setSize(200, 60);
+        timeLabel.setFont(new Font("Rockwell", Font.BOLD, 15));
+        add(timeLabel);
+
+    }
+
+    static void addRound(){
+        round++;
+        roundLabel.setText("Round: "+round/2);
     }
 
     private void addLabel() {
@@ -71,6 +110,9 @@ public class ChessGameFrame extends JFrame {
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(statusLabel);
+
+
+
     }
 
     public static void changeLabel(ChessColor color) {
@@ -80,6 +122,7 @@ public class ChessGameFrame extends JFrame {
             statusLabel.setText("Black");
         }
     }
+
 
     private void addLoadButton() {
         JButton button = new JButton("Load");
@@ -104,6 +147,7 @@ public class ChessGameFrame extends JFrame {
             }
             gameController.loadGameFromFile(path);
         });
+        round=0;
     }
 
     private void addInitButton() {
@@ -117,7 +161,9 @@ public class ChessGameFrame extends JFrame {
             this.gameController.getChessboard().initiateEmptyChessboard();
             gameController.loadGameFromFile(".\\loadData\\initiate.txt");
             this.gameController.getChessboard().repaint();
+            round=0;
         });
+
     }
 
     private void addSaveButton() {
@@ -145,6 +191,27 @@ public class ChessGameFrame extends JFrame {
             }
         });
     }
+    private void addNewButton(){
+        JButton button2=new JButton("New theme");
+        button2.setBounds(800,20,100,30);
+        button2.setFont(new Font("Rockwell",Font.BOLD,10));
+        button2.addActionListener(e -> {
+            a++;
+            if (a%2==1){
+                ImageIcon imageIcon2=new ImageIcon(".\\images\\41bf1dd81ebacbb3b69a73042e988740.jpeg");
+                labelImage.setIcon(imageIcon2);
+                add(labelImage);
+                this.repaint();
+            }
+            if (a%2==0){
+                ImageIcon imageIcon2=new ImageIcon(".\\images\\b06e94838a673cbc4789445a1bbc5c54.jpeg");
+                labelImage.setIcon(imageIcon2);
+                add(labelImage);
+                this.repaint();
+            }
+        });
+        add(button2);
+    }
 
     static class FileFilterTest extends javax.swing.filechooser.FileFilter {
         public boolean accept(java.io.File f) {
@@ -157,5 +224,28 @@ public class ChessGameFrame extends JFrame {
             return "need txt file";
         }
 
+    }
+}
+
+class MyThread implements Runnable{
+    Chessboard chessboard=null;
+
+    public MyThread(Chessboard chessboard){
+        this.chessboard=chessboard;
+    }
+    @Override
+    public void run() {
+        while (time>0){
+            time--;
+            timeLabel.setText("Remaining Time: "+time);
+            try{
+                Thread.sleep(1000);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            if(time==0){
+                chessboard.swapColor();
+            }
+        }
     }
 }
