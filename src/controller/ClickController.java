@@ -52,6 +52,7 @@ public class ClickController {
                 chessboard.swapChessComponents(first, chessComponent);
                 chessboard.swapColor();
                 first.setSelected(false);
+                chessboard.kingAttack(first);
                 first = null;
                 if (chessComponent instanceof KingChessComponent && chessComponent.getChessColor() == ChessColor.WHITE) {
                     Object[] options ={ "restart", "exit" };  //自定义按钮上的文字

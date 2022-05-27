@@ -31,7 +31,7 @@ public class Chessboard extends JComponent {
     //all chessComponents in this chessboard are shared only one model controller
     private final ClickController clickController = new ClickController(this);
     private final int CHESS_SIZE;
-    public List<ChessComponent[][]> regret=new ArrayList<>();
+    public List<ChessComponent[][]> regret = new ArrayList<>();
 
 
     public Chessboard(int width, int height) {
@@ -185,7 +185,7 @@ public class Chessboard extends JComponent {
         if (cnt1 != 0) {
             JOptionPane.showMessageDialog(null, "The chessboard is not 8 * 8", "wrong", JOptionPane.ERROR_MESSAGE);
         } else {
-            for (int i = 0; i < chessData.size()-1; i++) {
+            for (int i = 0; i < chessData.size() - 1; i++) {
                 for (int j = 0; j < chessData.get(i).length(); j++) {
                     if (chessData.get(i).charAt(j) != 'R' && chessData.get(i).charAt(j) != 'r' && chessData.get(i).charAt(j) != 'B' && chessData.get(i).charAt(j) != 'b' && chessData.get(i).charAt(j) != '_'
                             && chessData.get(i).charAt(j) != 'K' && chessData.get(i).charAt(j) != 'k' && chessData.get(i).charAt(j) != 'N' && chessData.get(i).charAt(j) != 'n' && chessData.get(i).charAt(j) != 'p'
@@ -197,7 +197,7 @@ public class Chessboard extends JComponent {
             if (cnt2 != 0) {
                 JOptionPane.showMessageDialog(null, "Chess pieces are not one of the six or Chess pieces are not black and white;", "wrong", JOptionPane.ERROR_MESSAGE);
             } else {
-                if (chessData.size() != 9 ) {
+                if (chessData.size() != 9) {
                     cnt3++;
                 }
                 if (cnt3 != 0) {
@@ -366,5 +366,26 @@ public class Chessboard extends JComponent {
         chessData.add(l8.toString());
         chessData.add(String.valueOf(chessBoard[8][0]));
         return chessData;
+    }
+
+    public void kingAttack(ChessComponent chessComponent) {
+        int cnt = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (chessComponents[i][j] instanceof KingChessComponent && chessComponents[i][j].getChessColor() != chessComponent.getChessColor()) {
+                    if (chessComponent.canMoveTo(this.chessComponents, new ChessboardPoint(i, j))) {
+                        cnt++;
+                        break;
+                    }
+                }
+            }
+        }
+        if (cnt != 0) {
+            if (chessComponent.getChessColor() == ChessColor.WHITE) {
+                JOptionPane.showMessageDialog(null, "The Black King is being attacked");
+            } else {
+                JOptionPane.showMessageDialog(null, "The White King is being attacked");
+            }
+        }
     }
 }
