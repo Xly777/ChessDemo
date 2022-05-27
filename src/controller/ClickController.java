@@ -37,6 +37,7 @@ public class ClickController {
             if (handleFirst(chessComponent)) {
                 chessComponent.setSelected(true);
                 first = chessComponent;
+                first.move(chessboard.getChessComponents(),1);
                 first.repaint();
 //                whereCanMOve();
             }
@@ -44,11 +45,13 @@ public class ClickController {
             if (first == chessComponent) { // 再次点击取消选取
                 chessComponent.setSelected(false);
                 ChessComponent recordFirst = first;
+                first.move(chessboard.getChessComponents(),0);
 //                whereCanMOve();
                 first = null;
                 recordFirst.repaint();
             } else if (handleSecond(chessComponent)) {
                 //repaint in swap chess method.
+                first.move(chessboard.getChessComponents(),0);
                 chessboard.swapChessComponents(first, chessComponent);
                 chessboard.swapColor();
                 first.setSelected(false);

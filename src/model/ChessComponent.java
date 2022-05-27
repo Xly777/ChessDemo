@@ -24,12 +24,13 @@ public abstract class ChessComponent extends JComponent {
      */
 
 //  private static final Dimension CHESSGRID_SIZE = new Dimension(1080 / 4 * 3 / 8, 1080 / 4 * 3 / 8);
-    private static final Color[] BACKGROUND_COLORS = {Color.WHITE, Color.pink};
+    private static final Color[] BACKGROUND_COLORS = {Color.WHITE, Color.BLACK};
     /**
      * handle click event
      */
     private ClickController clickController;
     protected List<ChessboardPoint> canMoveTo;
+    int judge;
 
     /**
      * chessboardPoint: 表示8*8棋盘中，当前棋子在棋格对应的位置，如(0, 0), (1, 0), (0, 7),(7, 7)等等
@@ -134,6 +135,21 @@ public abstract class ChessComponent extends JComponent {
 
     }
 
+    public void setJudge(int judge) {
+        this.judge = judge;
+    }
+
+    public void move(ChessComponent[][] chessComponents, int j){
+        for (int i = 0; i < 8; i++) {
+            for (int k = 0; k < 8; k++) {
+                if (this.canMoveTo(chessComponents,new ChessboardPoint(i,k))&&this.getChessColor()!=chessComponents[i][k].getChessColor()){
+                    chessComponents[i][k].setJudge(j);
+                    chessComponents[i][k].repaint();
+                }
+            }
+        }
+    }
+
     /**
      * 这个方法主要用于加载一些特定资源，如棋子图片等等。
      *
@@ -148,5 +164,11 @@ public abstract class ChessComponent extends JComponent {
         Color squareColor = BACKGROUND_COLORS[(chessboardPoint.getX() + chessboardPoint.getY()) % 2];
         g.setColor(squareColor);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        if (this.judge==1){
+            g.setColor(Color.pink);
+            ((Graphics2D)g).setStroke(new BasicStroke(3f));
+            g.fillRect(0,0,getWidth(),getHeight());
+        }
+
     }
 }
