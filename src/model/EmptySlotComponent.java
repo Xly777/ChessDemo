@@ -24,5 +24,14 @@ public class EmptySlotComponent extends ChessComponent {
     public void loadResource() throws IOException {
         //No resource!
     }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        //     g.drawImage(rookImage, 0, 0, getWidth() - 13, getHeight() - 20, this);
+        if (isSelected()) { // Highlights the model if selected.
+            g.setColor(Color.RED);
+            g.drawOval(0, 0, getWidth(), getHeight());
+        }
+    }
 
 }

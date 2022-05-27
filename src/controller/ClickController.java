@@ -6,6 +6,7 @@ import model.ChessComponent;
 import model.KingChessComponent;
 import view.ChessGameFrame;
 import view.Chessboard;
+import view.ChessboardPoint;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -21,17 +22,29 @@ public class ClickController {
         this.chessboard = chessboard;
     }
 
+    private void whereCanMOve(){
+        List<ChessboardPoint> chessboardPoints=first.whereCanMoveTo(chessboard.getChessComponents());
+
+        for (int i = 0; i < chessboardPoints.size(); i++) {
+            boolean flag = chessboard.getChessComponents()[chessboardPoints.get(i).getX()][chessboardPoints.get(i).getY()].isSelected();
+            chessboard.getChessComponents()[chessboardPoints.get(i).getX()][chessboardPoints.get(i).getY()].setSelected(!flag);
+            chessboard.getChessComponents()[chessboardPoints.get(i).getX()][chessboardPoints.get(i).getY()].repaint();
+        }
+
+    }
     public void onClick(ChessComponent chessComponent) {
         if (first == null) {
             if (handleFirst(chessComponent)) {
                 chessComponent.setSelected(true);
                 first = chessComponent;
                 first.repaint();
+//                whereCanMOve();
             }
         } else {
             if (first == chessComponent) { // 再次点击取消选取
                 chessComponent.setSelected(false);
                 ChessComponent recordFirst = first;
+//                whereCanMOve();
                 first = null;
                 recordFirst.repaint();
             } else if (handleSecond(chessComponent)) {

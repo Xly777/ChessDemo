@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 这个类是一个抽象类，主要表示8*8棋盘上每个格子的棋子情况，当前有两个子类继承它，分别是EmptySlotComponent(空棋子)和RookChessComponent(车)。
@@ -27,6 +29,7 @@ public abstract class ChessComponent extends JComponent {
      * handle click event
      */
     private ClickController clickController;
+    protected List<ChessboardPoint> canMoveTo;
 
     /**
      * chessboardPoint: 表示8*8棋盘中，当前棋子在棋格对应的位置，如(0, 0), (1, 0), (0, 7),(7, 7)等等
@@ -117,6 +120,19 @@ public abstract class ChessComponent extends JComponent {
      * 这个方法主要是检查移动的合法性，如果合法就返回true，反之是false
      */
     public abstract boolean canMoveTo(ChessComponent[][] chessboard, ChessboardPoint destination);
+
+    public List<ChessboardPoint> whereCanMoveTo(ChessComponent[][] chessComponents){
+        canMoveTo=new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (this.canMoveTo(chessComponents,new ChessboardPoint(i,j))){
+                    canMoveTo.add(new ChessboardPoint(i,j));
+                }
+            }
+        }
+          return canMoveTo;
+
+    }
 
     /**
      * 这个方法主要用于加载一些特定资源，如棋子图片等等。

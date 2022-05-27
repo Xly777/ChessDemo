@@ -147,7 +147,6 @@ public class BishopChessComponent extends ChessComponent {
             return false;
         }
     }
-
     /**
      * 注意这个方法，每当窗体受到了形状的变化，或者是通知要进行绘图的时候，就会调用这个方法进行画图。
      *
