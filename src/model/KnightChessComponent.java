@@ -32,11 +32,11 @@ public class KnightChessComponent extends ChessComponent {
      */
     public void loadResource() throws IOException {
         if (KNIGHT_WHITE == null) {
-            KNIGHT_WHITE = ImageIO.read(new File("./images/knight-white.png"));
+            KNIGHT_WHITE = ImageIO.read(new File(".\\images\\棋子\\IMG_0873.PNG"));
         }
 
         if (KNIGHT_BLACK == null) {
-            KNIGHT_BLACK = ImageIO.read(new File("./images/knight-black.png"));
+            KNIGHT_BLACK = ImageIO.read(new File(".\\images\\棋子\\IMG_0867.PNG"));
         }
     }
 

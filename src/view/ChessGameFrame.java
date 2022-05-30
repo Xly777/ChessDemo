@@ -162,6 +162,7 @@ public class ChessGameFrame extends JFrame {
             gameController.loadGameFromFile(".\\loadData\\initiate.txt");
             this.gameController.getChessboard().repaint();
             round = 0;
+            time=30;
         });
 
     }
@@ -199,8 +200,8 @@ public class ChessGameFrame extends JFrame {
     private File bgm;
 
     private void addMusicButton() {
-        jButton = new JButton("Music");
-        jButton.setBounds(100, 10, 100, 50);
+        jButton = new JButton("Music1");
+        jButton.setBounds(100, 10, 150, 50);
         jButton.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(jButton);
         jButton.addActionListener(e -> {
