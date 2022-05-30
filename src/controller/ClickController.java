@@ -49,6 +49,17 @@ public class ClickController {
             e.printStackTrace();
         }
     }
+    private void addMusic2() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+        bgm = new File(".\\music\\种下音效.wav");
+        try {
+            clip1 = AudioSystem.getClip();
+            audioInput1 = AudioSystem.getAudioInputStream(bgm);
+            clip1.open(audioInput1);
+            clip1.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public ClickController(Chessboard chessboard) {
         this.chessboard = chessboard;
     }
@@ -70,7 +81,6 @@ public class ClickController {
                 first = chessComponent;
                 first.move(chessboard.getChessComponents(),1);
                 first.repaint();
-//                whereCanMOve();
             }
         } else {
             if (first == chessComponent) { // 再次点击取消选取
@@ -82,6 +92,11 @@ public class ClickController {
                 recordFirst.repaint();
             } else if (handleSecond(chessComponent)) {
                 //repaint in swap chess method.
+                try {
+                    addMusic2();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
                 first.move(chessboard.getChessComponents(),0);
                 chessboard.swapChessComponents(first, chessComponent);
                 chessboard.swapColor();
@@ -98,6 +113,7 @@ public class ClickController {
                     int m = JOptionPane.showOptionDialog(null, "The Black wins!", "Game over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
                     if(m==0){
                         this.chessboard.initiateEmptyChessboard();
+                        ChessGameFrame.round=0;
                         try {
                             List<String> chessData = Files.readAllLines(Path.of(".\\loadData\\initiate.txt"));
                             chessboard.loadGame(chessData);
