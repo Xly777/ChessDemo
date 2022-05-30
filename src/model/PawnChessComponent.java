@@ -86,7 +86,7 @@ public class PawnChessComponent extends ChessComponent {
                 if (chessComponents[x - 1][y].getChessColor() == ChessColor.NONE) {
                     canMoveTo.add(new ChessboardPoint(x - 1, y));
                 }
-                if (chessComponents[x - 2][y].getChessColor() == ChessColor.NONE) {
+                if (chessComponents[x - 2][y].getChessColor() == ChessColor.NONE&&chessComponents[x-1][y].getChessColor()==ChessColor.NONE) {
                     canMoveTo.add(new ChessboardPoint(x - 2, y));
                 }
                 if (y - 1 >= 0 && chessComponents[x - 1][y - 1].getChessColor() == ChessColor.BLACK) {
@@ -111,7 +111,7 @@ public class PawnChessComponent extends ChessComponent {
                 if (chessComponents[x + 1][y].getChessColor() == ChessColor.NONE) {
                     canMoveTo.add(new ChessboardPoint(x + 1, y));
                 }
-                if (chessComponents[x + 2][y].getChessColor() == ChessColor.NONE) {
+                if (chessComponents[x + 2][y].getChessColor() == ChessColor.NONE&&chessComponents[x+1][y].getChessColor()==ChessColor.NONE) {
                     canMoveTo.add(new ChessboardPoint(x + 2, y));
                 }
                 if (y + 1 < 8 && chessComponents[x + 1][y + 1].getChessColor() == ChessColor.WHITE) {
@@ -158,8 +158,9 @@ public class PawnChessComponent extends ChessComponent {
         g.drawImage(pawnImage, 0, 0, getWidth(), getHeight(), this);
         g.setColor(Color.BLACK);
         if (isSelected()) { // Highlights the model if selected.
-            g.setColor(Color.RED);
-            g.drawOval(0, 0, getWidth(), getHeight());
+            g.setColor(Color.PINK);
+            g.fillRect(0, 0, getWidth(), getHeight());
+            g.drawImage(pawnImage, 0, 0, getWidth(), getHeight(), this);
         }
     }
 }

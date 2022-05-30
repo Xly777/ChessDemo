@@ -4,6 +4,7 @@ package controller;
 import model.ChessColor;
 import model.ChessComponent;
 import model.KingChessComponent;
+import model.PawnChessComponent;
 import view.ChessGameFrame;
 import view.Chessboard;
 import view.ChessboardPoint;
@@ -56,6 +57,41 @@ public class ClickController {
                 chessboard.swapColor();
                 first.setSelected(false);
                 chessboard.kingAttack(first);
+                if(first instanceof PawnChessComponent ){
+                    if(first.getChessColor()==ChessColor.WHITE&&first.getChessboardPoint().getX()==0){
+                        Object[] options={"Queen","Knight","Rook","Bishop"};
+                        String name=(String) JOptionPane.showInputDialog(null,"Choose the chess to promote:\n","Promotion",JOptionPane.PLAIN_MESSAGE,null,options,null);
+                        if(name.equals("Queen")){
+                            chessboard.initQueenOnboard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.WHITE);
+                            chessboard.repaint();
+                        }else if(name.equals("Knight")){
+                            chessboard.initKnightOnBoard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.WHITE);
+                            chessboard.repaint();
+                        }else if(name.equals("Rook")){
+                            chessboard.initRookOnBoard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.WHITE);
+                            chessboard.repaint();
+                        }else if(name.equals("Bishop")){
+                            chessboard.initBishopOnBoard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.WHITE);
+                            chessboard.repaint();
+                        }
+                    }else if(first.getChessColor()==ChessColor.BLACK&&first.getChessboardPoint().getX()==7){
+                        Object[] options={"Queen","Knight","Rook","Bishop"};
+                        String name=(String) JOptionPane.showInputDialog(null,"Choose the chess to promote:\n","Promotion",JOptionPane.PLAIN_MESSAGE,null,options,null);
+                        if(name.equals("Queen")){
+                            chessboard.initQueenOnboard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.BLACK);
+                            chessboard.repaint();
+                        }else if(name.equals("Knight")){
+                            chessboard.initKnightOnBoard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.BLACK);
+                            chessboard.repaint();
+                        }else if(name.equals("Rook")){
+                            chessboard.initRookOnBoard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.BLACK);
+                            chessboard.repaint();
+                        }else if(name.equals("Bishop")){
+                            chessboard.initBishopOnBoard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.BLACK);
+                            chessboard.repaint();
+                        }
+                    }
+                }
                 first = null;
                 if (chessComponent instanceof KingChessComponent && chessComponent.getChessColor() == ChessColor.WHITE) {
                     Object[] options ={ "restart", "exit" };  //自定义按钮上的文字
