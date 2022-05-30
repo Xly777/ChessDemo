@@ -26,6 +26,7 @@ public class ClickController {
     private Clip clip1;
     private AudioInputStream audioInput1;
     private File bgm1;
+
     private void addMusic() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
         bgm = new File(".\\music\\失败背景.wav");
         try {
@@ -49,6 +50,7 @@ public class ClickController {
             e.printStackTrace();
         }
     }
+
     private void addMusic2() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
         bgm = new File(".\\music\\种下音效.wav");
         try {
@@ -60,12 +62,13 @@ public class ClickController {
             e.printStackTrace();
         }
     }
+
     public ClickController(Chessboard chessboard) {
         this.chessboard = chessboard;
     }
 
-    private void whereCanMOve(){
-        List<ChessboardPoint> chessboardPoints=first.whereCanMoveTo(chessboard.getChessComponents());
+    private void whereCanMOve() {
+        List<ChessboardPoint> chessboardPoints = first.whereCanMoveTo(chessboard.getChessComponents());
 
         for (int i = 0; i < chessboardPoints.size(); i++) {
             boolean flag = chessboard.getChessComponents()[chessboardPoints.get(i).getX()][chessboardPoints.get(i).getY()].isSelected();
@@ -74,19 +77,20 @@ public class ClickController {
         }
 
     }
+
     public void onClick(ChessComponent chessComponent) {
         if (first == null) {
             if (handleFirst(chessComponent)) {
                 chessComponent.setSelected(true);
                 first = chessComponent;
-                first.move(chessboard.getChessComponents(),1);
+                first.move(chessboard.getChessComponents(), 1);
                 first.repaint();
             }
         } else {
             if (first == chessComponent) { // 再次点击取消选取
                 chessComponent.setSelected(false);
                 ChessComponent recordFirst = first;
-                first.move(chessboard.getChessComponents(),0);
+                first.move(chessboard.getChessComponents(), 0);
 //                whereCanMOve();
                 first = null;
                 recordFirst.repaint();
@@ -97,23 +101,22 @@ public class ClickController {
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-                first.move(chessboard.getChessComponents(),0);
+                first.move(chessboard.getChessComponents(), 0);
                 chessboard.swapChessComponents(first, chessComponent);
                 chessboard.swapColor();
                 first.setSelected(false);
                 chessboard.kingAttack(first);
-                first = null;
                 if (chessComponent instanceof KingChessComponent && chessComponent.getChessColor() == ChessColor.WHITE) {
                     try {
                         addMusic();
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
-                    Object[] options ={ "restart", "exit" };  //自定义按钮上的文字
+                    Object[] options = {"restart", "exit"};  //自定义按钮上的文字
                     int m = JOptionPane.showOptionDialog(null, "The Black wins!", "Game over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-                    if(m==0){
+                    if (m == 0) {
                         this.chessboard.initiateEmptyChessboard();
-                        ChessGameFrame.round=0;
+                        ChessGameFrame.round = 0;
                         try {
                             List<String> chessData = Files.readAllLines(Path.of(".\\loadData\\initiate.txt"));
                             chessboard.loadGame(chessData);
@@ -121,21 +124,20 @@ public class ClickController {
                             e.printStackTrace();
                         }
                         this.chessboard.repaint();
-                    }else{
+                    } else {
                         System.exit(0);
                     }
-                }
-                else if(chessComponent instanceof KingChessComponent && chessComponent.getChessColor() == ChessColor.BLACK){
+                } else if (chessComponent instanceof KingChessComponent && chessComponent.getChessColor() == ChessColor.BLACK) {
                     try {
                         addMusic1();
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
-                    Object[] options ={ "restart", "exit" };  //自定义按钮上的文字
+                    Object[] options = {"restart", "exit"};  //自定义按钮上的文字
                     int m = JOptionPane.showOptionDialog(null, "The White wins!", "Game over", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-                    if(m==0){
+                    if (m == 0) {
                         this.chessboard.initiateEmptyChessboard();
-                        ChessGameFrame.round=0;
+                        ChessGameFrame.round = 0;
                         try {
                             List<String> chessData = Files.readAllLines(Path.of(".\\loadData\\initiate.txt"));
                             chessboard.loadGame(chessData);
@@ -143,45 +145,46 @@ public class ClickController {
                             e.printStackTrace();
                         }
                         this.chessboard.repaint();
-                    }else{
+                    } else {
                         System.exit(0);
                     }
                 }
-            }
-            if(first instanceof PawnChessComponent ){
-                if(first.getChessColor()==ChessColor.WHITE&&first.getChessboardPoint().getX()==0){
-                    Object[] options={"Queen","Knight","Rook","Bishop"};
-                    String name=(String) JOptionPane.showInputDialog(null,"Choose the chess to promote:\n","Promotion",JOptionPane.PLAIN_MESSAGE,null,options,null);
-                    if(name.equals("Queen")){
-                        chessboard.initQueenOnboard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.WHITE);
-                        chessboard.repaint();
-                    }else if(name.equals("Knight")){
-                        chessboard.initKnightOnBoard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.WHITE);
-                        chessboard.repaint();
-                    }else if(name.equals("Rook")){
-                        chessboard.initRookOnBoard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.WHITE);
-                        chessboard.repaint();
-                    }else if(name.equals("Bishop")){
-                        chessboard.initBishopOnBoard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.WHITE);
-                        chessboard.repaint();
-                    }
-                }else if(first.getChessColor()==ChessColor.BLACK&&first.getChessboardPoint().getX()==7){
-                    Object[] options={"Queen","Knight","Rook","Bishop"};
-                    String name=(String) JOptionPane.showInputDialog(null,"Choose the chess to promote:\n","Promotion",JOptionPane.PLAIN_MESSAGE,null,options,null);
-                    if(name.equals("Queen")){
-                        chessboard.initQueenOnboard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.BLACK);
-                        chessboard.repaint();
-                    }else if(name.equals("Knight")){
-                        chessboard.initKnightOnBoard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.BLACK);
-                        chessboard.repaint();
-                    }else if(name.equals("Rook")){
-                        chessboard.initRookOnBoard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.BLACK);
-                        chessboard.repaint();
-                    }else if(name.equals("Bishop")){
-                        chessboard.initBishopOnBoard(first.getChessboardPoint().getX(),first.getChessboardPoint().getY(),ChessColor.BLACK);
-                        chessboard.repaint();
+                if (first instanceof PawnChessComponent) {
+                    if (first.getChessColor() == ChessColor.WHITE && first.getChessboardPoint().getX() == 0) {
+                        Object[] options = {"Queen", "Knight", "Rook", "Bishop"};
+                        String name = (String) JOptionPane.showInputDialog(null, "Choose the chess to promote:\n", "Promotion", JOptionPane.PLAIN_MESSAGE, null, options, null);
+                        if (name.equals("Queen")) {
+                            chessboard.initQueenOnboard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.WHITE);
+                            chessboard.repaint();
+                        } else if (name.equals("Knight")) {
+                            chessboard.initKnightOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.WHITE);
+                            chessboard.repaint();
+                        } else if (name.equals("Rook")) {
+                            chessboard.initRookOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.WHITE);
+                            chessboard.repaint();
+                        } else if (name.equals("Bishop")) {
+                            chessboard.initBishopOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.WHITE);
+                            chessboard.repaint();
+                        }
+                    } else if (first.getChessColor() == ChessColor.BLACK && first.getChessboardPoint().getX() == 7) {
+                        Object[] options = {"Queen", "Knight", "Rook", "Bishop"};
+                        String name = (String) JOptionPane.showInputDialog(null, "Choose the chess to promote:\n", "Promotion", JOptionPane.PLAIN_MESSAGE, null, options, null);
+                        if (name.equals("Queen")) {
+                            chessboard.initQueenOnboard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.BLACK);
+                            chessboard.repaint();
+                        } else if (name.equals("Knight")) {
+                            chessboard.initKnightOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.BLACK);
+                            chessboard.repaint();
+                        } else if (name.equals("Rook")) {
+                            chessboard.initRookOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.BLACK);
+                            chessboard.repaint();
+                        } else if (name.equals("Bishop")) {
+                            chessboard.initBishopOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.BLACK);
+                            chessboard.repaint();
+                        }
                     }
                 }
+                first = null;
             }
         }
     }
