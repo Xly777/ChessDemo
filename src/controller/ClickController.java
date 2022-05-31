@@ -148,7 +148,7 @@ public class ClickController {
                     } else {
                         System.exit(0);
                     }
-                } else if (first instanceof PawnChessComponent) {
+                } else if (first instanceof PawnChessComponent && (first.getChessboardPoint().getX() == 0 || first.getChessboardPoint().getX() == 7)) {
                     if (first.getChessColor() == ChessColor.WHITE && first.getChessboardPoint().getX() == 0) {
                         Object[] options = {"Queen", "Knight", "Rook", "Bishop"};
                         int n = JOptionPane.showOptionDialog(null, "Choose the chess to promote:\n", "Promotion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
