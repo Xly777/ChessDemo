@@ -175,99 +175,107 @@ public class Chessboard extends JComponent {
         int cnt1 = 0;
         int cnt2 = 0;
         int cnt3 = 0;
-        for (int i = 0; i < chessData.size() - 1; i++) {
-            if (chessData.get(i).length() != 8) {
-                cnt1++;
-                break;
-            }
-        }
-        if (cnt1 != 0) {
+        if (chessData.size() == 0) {
             JOptionPane.showMessageDialog(null, "The chessboard is not 8 * 8", "wrong", JOptionPane.ERROR_MESSAGE);
         } else {
+            if (chessData.size() != 9 && ((chessData.get(chessData.size() - 1).length() == 1 &&
+                    chessData.get(chessData.size() - 1).charAt(0) == 'w' || chessData.get(chessData.size() - 1).charAt(0) == 'b' )|| ((chessData.get(chessData.size() - 1)).length() != 8))) {
+                cnt1++;
+            }
             for (int i = 0; i < chessData.size() - 1; i++) {
-                for (int j = 0; j < chessData.get(i).length(); j++) {
-                    if (chessData.get(i).charAt(j) != 'R' && chessData.get(i).charAt(j) != 'r' && chessData.get(i).charAt(j) != 'B' && chessData.get(i).charAt(j) != 'b' && chessData.get(i).charAt(j) != '_'
-                            && chessData.get(i).charAt(j) != 'K' && chessData.get(i).charAt(j) != 'k' && chessData.get(i).charAt(j) != 'N' && chessData.get(i).charAt(j) != 'n' && chessData.get(i).charAt(j) != 'p'
-                            && chessData.get(i).charAt(j) != 'P' && chessData.get(i).charAt(j) != 'Q' && chessData.get(i).charAt(j) != 'q') {
-                        cnt2++;
+                if (chessData.get(i).length() != 8) {
+                    cnt1++;
+                    break;
+                }
+            }
+            if (cnt1 != 0) {
+                JOptionPane.showMessageDialog(null, "The chessboard is not 8 * 8", "wrong", JOptionPane.ERROR_MESSAGE);
+            } else {
+                for (int i = 0; i < chessData.size() - 1; i++) {
+                    for (int j = 0; j < chessData.get(i).length(); j++) {
+                        if (chessData.get(i).charAt(j) != 'R' && chessData.get(i).charAt(j) != 'r' && chessData.get(i).charAt(j) != 'B' && chessData.get(i).charAt(j) != 'b' && chessData.get(i).charAt(j) != '_'
+                                && chessData.get(i).charAt(j) != 'K' && chessData.get(i).charAt(j) != 'k' && chessData.get(i).charAt(j) != 'N' && chessData.get(i).charAt(j) != 'n' && chessData.get(i).charAt(j) != 'p'
+                                && chessData.get(i).charAt(j) != 'P' && chessData.get(i).charAt(j) != 'Q' && chessData.get(i).charAt(j) != 'q') {
+                            cnt2++;
+                        }
+                    }
+                }
+                if (cnt2 != 0) {
+                    JOptionPane.showMessageDialog(null, "Chess pieces are not one of the six or Chess pieces are not black and white;", "wrong", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    if (chessData.size() != 9) {
+                        cnt3++;
+                    }
+                    if (cnt3 != 0) {
+                        JOptionPane.showMessageDialog(null, "The imported data only has a chessboard, and there is no prompt for the next player;", "wrong", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
-            if (cnt2 != 0) {
-                JOptionPane.showMessageDialog(null, "Chess pieces are not one of the six or Chess pieces are not black and white;", "wrong", JOptionPane.ERROR_MESSAGE);
-            } else {
-                if (chessData.size() != 9) {
-                    cnt3++;
-                }
-                if (cnt3 != 0) {
-                    JOptionPane.showMessageDialog(null, "The imported data only has a chessboard, and there is no prompt for the next player;", "wrong", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
-        if (cnt1 == 0 && cnt2 == 0 && cnt3 == 0) {
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
-                    switch (chessData.get(i).charAt(j)) {
-                        case 'R':
-                            initRookOnBoard(i, j, ChessColor.BLACK);
-                            chessComponents[i][j].repaint();
-                            break;
-                        case 'r':
-                            initRookOnBoard(i, j, ChessColor.WHITE);
-                            chessComponents[i][j].repaint();
-                            break;
-                        case 'Q':
-                            initQueenOnboard(i, j, ChessColor.BLACK);
-                            chessComponents[i][j].repaint();
-                            break;
-                        case 'q':
-                            initQueenOnboard(i, j, ChessColor.WHITE);
-                            chessComponents[i][j].repaint();
-                            break;
-                        case 'B':
-                            initBishopOnBoard(i, j, ChessColor.BLACK);
-                            chessComponents[i][j].repaint();
-                            break;
-                        case 'b':
-                            initBishopOnBoard(i, j, ChessColor.WHITE);
-                            chessComponents[i][j].repaint();
-                            break;
-                        case 'N':
-                            initKnightOnBoard(i, j, ChessColor.BLACK);
-                            chessComponents[i][j].repaint();
-                            break;
-                        case 'n':
-                            initKnightOnBoard(i, j, ChessColor.WHITE);
-                            chessComponents[i][j].repaint();
-                            break;
-                        case 'K':
-                            initKingOnboard(i, j, ChessColor.BLACK);
-                            chessComponents[i][j].repaint();
-                            break;
-                        case 'k':
-                            initKingOnboard(i, j, ChessColor.WHITE);
-                            chessComponents[i][j].repaint();
-                            break;
-                        case 'P':
-                            initPawnOnboard(i, j, ChessColor.BLACK);
-                            chessComponents[i][j].repaint();
-                            break;
-                        case 'p':
-                            initPawnOnboard(i, j, ChessColor.WHITE);
-                            chessComponents[i][j].repaint();
-                            break;
-                        case '_':
-                            initiateEmptyChessboard(i, j);
-                            chessComponents[i][j].repaint();
+            if (cnt1 == 0 && cnt2 == 0 && cnt3 == 0) {
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        switch (chessData.get(i).charAt(j)) {
+                            case 'R':
+                                initRookOnBoard(i, j, ChessColor.BLACK);
+                                chessComponents[i][j].repaint();
+                                break;
+                            case 'r':
+                                initRookOnBoard(i, j, ChessColor.WHITE);
+                                chessComponents[i][j].repaint();
+                                break;
+                            case 'Q':
+                                initQueenOnboard(i, j, ChessColor.BLACK);
+                                chessComponents[i][j].repaint();
+                                break;
+                            case 'q':
+                                initQueenOnboard(i, j, ChessColor.WHITE);
+                                chessComponents[i][j].repaint();
+                                break;
+                            case 'B':
+                                initBishopOnBoard(i, j, ChessColor.BLACK);
+                                chessComponents[i][j].repaint();
+                                break;
+                            case 'b':
+                                initBishopOnBoard(i, j, ChessColor.WHITE);
+                                chessComponents[i][j].repaint();
+                                break;
+                            case 'N':
+                                initKnightOnBoard(i, j, ChessColor.BLACK);
+                                chessComponents[i][j].repaint();
+                                break;
+                            case 'n':
+                                initKnightOnBoard(i, j, ChessColor.WHITE);
+                                chessComponents[i][j].repaint();
+                                break;
+                            case 'K':
+                                initKingOnboard(i, j, ChessColor.BLACK);
+                                chessComponents[i][j].repaint();
+                                break;
+                            case 'k':
+                                initKingOnboard(i, j, ChessColor.WHITE);
+                                chessComponents[i][j].repaint();
+                                break;
+                            case 'P':
+                                initPawnOnboard(i, j, ChessColor.BLACK);
+                                chessComponents[i][j].repaint();
+                                break;
+                            case 'p':
+                                initPawnOnboard(i, j, ChessColor.WHITE);
+                                chessComponents[i][j].repaint();
+                                break;
+                            case '_':
+                                initiateEmptyChessboard(i, j);
+                                chessComponents[i][j].repaint();
+                        }
                     }
                 }
-            }
-            if (chessData.get(8).charAt(0) == 'w') {
-                currentColor = ChessColor.WHITE;
-                ChessGameFrame.changeLabel(ChessColor.WHITE);
-            } else {
-                currentColor = ChessColor.BLACK;
-                ChessGameFrame.changeLabel(ChessColor.BLACK);
+                if (chessData.get(8).charAt(0) == 'w') {
+                    currentColor = ChessColor.WHITE;
+                    ChessGameFrame.changeLabel(ChessColor.WHITE);
+                } else {
+                    currentColor = ChessColor.BLACK;
+                    ChessGameFrame.changeLabel(ChessColor.BLACK);
+                }
             }
         }
     }
