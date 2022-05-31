@@ -143,9 +143,9 @@ public class ChessGameFrame extends JFrame {
                     JOptionPane.showMessageDialog(null, "need txt file", "wrong", JOptionPane.ERROR_MESSAGE);
                 } else {
                     path = jfchooser.getSelectedFile().getPath();
+                    gameController.loadGameFromFile(path);
                 }
             }
-            gameController.loadGameFromFile(path);
         });
         round = 0;
     }
