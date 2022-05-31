@@ -105,7 +105,7 @@ public class ClickController {
                 chessboard.swapChessComponents(first, chessComponent);
                 chessboard.swapColor();
                 first.setSelected(false);
-                chessboard.kingAttack(first);
+                chessboard.kingAttack();
                 if (chessComponent instanceof KingChessComponent && chessComponent.getChessColor() == ChessColor.WHITE) {
                     try {
                         addMusic();
@@ -148,41 +148,41 @@ public class ClickController {
                     } else {
                         System.exit(0);
                     }
-                }
-                if (first instanceof PawnChessComponent) {
+                } else if (first instanceof PawnChessComponent) {
                     if (first.getChessColor() == ChessColor.WHITE && first.getChessboardPoint().getX() == 0) {
                         Object[] options = {"Queen", "Knight", "Rook", "Bishop"};
-                        String name = (String) JOptionPane.showInputDialog(null, "Choose the chess to promote:\n", "Promotion", JOptionPane.PLAIN_MESSAGE, null, options, null);
-                        if (name.equals("Queen")) {
+                        int n = JOptionPane.showOptionDialog(null, "Choose the chess to promote:\n", "Promotion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                        if (n == 0) {
                             chessboard.initQueenOnboard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.WHITE);
                             chessboard.repaint();
-                        } else if (name.equals("Knight")) {
+                        } else if (n == 1) {
                             chessboard.initKnightOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.WHITE);
                             chessboard.repaint();
-                        } else if (name.equals("Rook")) {
+                        } else if (n == 2) {
                             chessboard.initRookOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.WHITE);
                             chessboard.repaint();
-                        } else if (name.equals("Bishop")) {
+                        } else if (n == 3) {
                             chessboard.initBishopOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.WHITE);
                             chessboard.repaint();
                         }
                     } else if (first.getChessColor() == ChessColor.BLACK && first.getChessboardPoint().getX() == 7) {
                         Object[] options = {"Queen", "Knight", "Rook", "Bishop"};
-                        String name = (String) JOptionPane.showInputDialog(null, "Choose the chess to promote:\n", "Promotion", JOptionPane.PLAIN_MESSAGE, null, options, null);
-                        if (name.equals("Queen")) {
+                        int n = JOptionPane.showOptionDialog(null, "Choose the chess to promote:\n", "Promotion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                        if (n == 0) {
                             chessboard.initQueenOnboard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.BLACK);
                             chessboard.repaint();
-                        } else if (name.equals("Knight")) {
+                        } else if (n == 1) {
                             chessboard.initKnightOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.BLACK);
                             chessboard.repaint();
-                        } else if (name.equals("Rook")) {
+                        } else if (n == 2) {
                             chessboard.initRookOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.BLACK);
                             chessboard.repaint();
-                        } else if (name.equals("Bishop")) {
+                        } else if (n == 3) {
                             chessboard.initBishopOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.BLACK);
                             chessboard.repaint();
                         }
                     }
+                    chessboard.kingAttack();
                 }
                 first = null;
             }

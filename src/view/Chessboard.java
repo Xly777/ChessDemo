@@ -31,7 +31,6 @@ public class Chessboard extends JComponent {
     //all chessComponents in this chessboard are shared only one model controller
     private final ClickController clickController = new ClickController(this);
     private final int CHESS_SIZE;
-    public List<ChessComponent[][]> regret = new ArrayList<>();
 
 
     public Chessboard(int width, int height) {
@@ -121,7 +120,7 @@ public class Chessboard extends JComponent {
         currentColor = currentColor == ChessColor.BLACK ? ChessColor.WHITE : ChessColor.BLACK;
         ChessGameFrame.changeLabel(currentColor);
         ChessGameFrame.addRound();
-        ChessGameFrame.time=30;
+        ChessGameFrame.time = 30;
     }
 
     public void initRookOnBoard(int row, int col, ChessColor color) {
@@ -368,20 +367,26 @@ public class Chessboard extends JComponent {
         return chessData;
     }
 
-    public void kingAttack(ChessComponent chessComponent) {
+    public void kingAttack() {
         int cnt = 0;
+        int x = 0, y = 0;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (chessComponents[i][j] instanceof KingChessComponent && chessComponents[i][j].getChessColor() != chessComponent.getChessColor()) {
-                    if (chessComponent.canMoveTo(this.chessComponents, new ChessboardPoint(i, j))) {
-                        cnt++;
-                        break;
+                for (int k = 0; k < 8; k++) {
+                    for (int l = 0; l < 8; l++) {
+                        if (!(chessComponents[i][j] instanceof KingChessComponent) && chessComponents[i][j].canMoveTo(chessComponents, new ChessboardPoint(k, l)) &&
+                                chessComponents[k][l] instanceof KingChessComponent && chessComponents[i][j].getChessColor() != chessComponents[k][l].getChessColor()) {
+                            cnt++;
+                            x = i;
+                            y = j;
+                            break;
+                        }
                     }
                 }
             }
         }
         if (cnt != 0) {
-            if (chessComponent.getChessColor() == ChessColor.WHITE) {
+            if (chessComponents[x][y].getChessColor() == ChessColor.WHITE) {
                 JOptionPane.showMessageDialog(null, "The Black King is being attacked");
             } else {
                 JOptionPane.showMessageDialog(null, "The White King is being attacked");

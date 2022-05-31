@@ -26,7 +26,7 @@ public class GameController {
             return chessData;
         } catch (IOException e) {
             e.printStackTrace();
-        } 
+        }
         return null;
     }
 }
