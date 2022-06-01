@@ -151,7 +151,7 @@ public class ClickController {
                 } else if (first instanceof PawnChessComponent && (first.getChessboardPoint().getX() == 0 || first.getChessboardPoint().getX() == 7)) {
                     if (first.getChessColor() == ChessColor.WHITE && first.getChessboardPoint().getX() == 0) {
                         Object[] options = {"Queen", "Knight", "Rook", "Bishop"};
-                        int n = JOptionPane.showOptionDialog(null, "Choose the chess to promote:\n", "Promotion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                        int n = JOptionPane.showOptionDialog(null, "Choose the chess to promote:(default:Queen)", "Promotion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
                         if (n == 0) {
                             chessboard.initQueenOnboard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.WHITE);
                             chessboard.repaint();
@@ -164,10 +164,13 @@ public class ClickController {
                         } else if (n == 3) {
                             chessboard.initBishopOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.WHITE);
                             chessboard.repaint();
+                        }else{
+                            chessboard.initQueenOnboard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.WHITE);
+                            chessboard.repaint();
                         }
                     } else if (first.getChessColor() == ChessColor.BLACK && first.getChessboardPoint().getX() == 7) {
                         Object[] options = {"Queen", "Knight", "Rook", "Bishop"};
-                        int n = JOptionPane.showOptionDialog(null, "Choose the chess to promote:\n", "Promotion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                        int n = JOptionPane.showOptionDialog(null, "Choose the chess to promote:(default:Queen)\n", "Promotion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
                         if (n == 0) {
                             chessboard.initQueenOnboard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.BLACK);
                             chessboard.repaint();
@@ -179,6 +182,9 @@ public class ClickController {
                             chessboard.repaint();
                         } else if (n == 3) {
                             chessboard.initBishopOnBoard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.BLACK);
+                            chessboard.repaint();
+                        }else{
+                            chessboard.initQueenOnboard(first.getChessboardPoint().getX(), first.getChessboardPoint().getY(), ChessColor.BLACK);
                             chessboard.repaint();
                         }
                     }
